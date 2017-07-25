@@ -15,9 +15,10 @@ if [ ! -d /home/$USER ]; then
     mkdir -p /home/$USER
 fi
 chown "${USER}:${GROUP}" /home/$USER
+export HOME=/home/$USER
 
 # set secure cookie key
- echo -n "${SECURE_COOKIE_KEY}" > /var/lib/rstudio-server/secure-cookie-key
+echo -n "${SECURE_COOKIE_KEY}" > /var/lib/rstudio-server/secure-cookie-key
 chmod 600 /var/lib/rstudio-server/secure-cookie-key
 
 /usr/lib/rstudio-server/bin/rserver --server-daemonize=0
