@@ -17,6 +17,9 @@ fi
 chown "${USER}:${GROUP}" /home/$USER
 export HOME=/home/$USER
 
+# Pass select root env vars to user's R environment
+echo "AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}" >> /usr/local/lib/R/etc/Renviron
+
 # set secure cookie key
 echo -n "${SECURE_COOKIE_KEY}" > /var/lib/rstudio-server/secure-cookie-key
 chmod 600 /var/lib/rstudio-server/secure-cookie-key
