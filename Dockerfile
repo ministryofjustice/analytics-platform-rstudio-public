@@ -164,7 +164,7 @@ RUN R -e "install.packages(c(\
     ))" \
 
   # Install R S3 package
-  && R -e "install.packages(c('aws.signature', 'aws.s3'), \
+  && R -e "install.packages(c('aws.signature', 'aws.s3', 'aws.ec2metadata'), \
     repos = c('cloudyr' = 'http://cloudyr.github.io/drat'))" \
 
   # Install MOJ S3tools package
