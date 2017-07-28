@@ -170,6 +170,7 @@ RUN R -e "install.packages(c(\
 
   # Install MOJ S3tools package
   && R -e "devtools::install_github('moj-analytical-services/s3tools')" \
+  && R -e "devtools::install_github('moj-analytical-services/s3browser')" \
 
   # Install webshot/phantomjs for Doc/PDF with JS graphs in it
   && R -e "install.packages('webshot')" \
