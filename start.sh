@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -ex
 
 GROUP=staff
 USER_UID=1001
@@ -21,7 +21,9 @@ export HOME=/home/$USER
 echo "AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}" >> /etc/R/Renviron
 
 # set secure cookie key
+set +x
 echo -n "${SECURE_COOKIE_KEY}" > /var/lib/rstudio-server/secure-cookie-key
+set -x
 chmod 600 /var/lib/rstudio-server/secure-cookie-key
 
 /usr/lib/rstudio-server/bin/rserver --server-daemonize=0
