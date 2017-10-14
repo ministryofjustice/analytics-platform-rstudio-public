@@ -155,6 +155,7 @@ RUN R -e "install.packages(c(\
     'jsonlite', \
     'knitr', \
     'markdown', \
+    'packrat', \
     'readr', \
     'rmarkdown', \
     'rprojroot', \
