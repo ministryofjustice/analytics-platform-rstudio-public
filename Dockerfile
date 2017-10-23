@@ -87,6 +87,7 @@ RUN apt-get update \
     libbz2-dev \
     libpcre3-dev \
     liblzma-dev \
+    libglpk-dev \
     libicu-dev \
     libpng-dev \
     libjpeg-dev \
