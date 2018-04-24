@@ -1,0 +1,14 @@
+rrdtool
+texinfo
+bzip2
+libglpk-dev
+libpoppler-cpp-dev
+libgeos-dev
+libgdal-dev
+libproj-dev
+lmodern
+curl
+build-essential
+wget
+libfontconfig1
+alien
