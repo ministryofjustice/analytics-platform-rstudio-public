@@ -58,6 +58,15 @@ RUN apt-get update && apt-get install -y \
 	&& alien -i /tmp/simbaathena-1.0.2.1003-1.x86_64.rpm \
 	&& rm -f /tmp/simbaathena-1.0.2.1003-1.x86_64.rpm
 
+# Need vega and vega lite npm packages to render high res vega charts
+RUN sudo curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash \
+    && apt-get install -y nodejs npm
+
+# The Altair python allows us to use this in R via the reticulate package
+RUN npm config set unsafe-perm true \
+    && npm install -g vega vega-lite \
+    && pip install altair
+
 # Add static list of R packages
 COPY R_packages /tmp/R_packages
 
@@ -83,6 +92,9 @@ RUN install2.r --error \
 # Configure git
 RUN git config --system credential.helper 'cache --timeout=3600' \
     && git config --system push.default simple
+
+# Adds Athena ODBC driver configuration
+COPY files/odbc* /etc/
 
 COPY start.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/start.sh
