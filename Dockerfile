@@ -4,10 +4,10 @@ LABEL maintainer=analytics-platform-tech@digital.justice.gov.uk
 
 ENV R_VERSION=${R_VERSION:-3.4.2}
 ENV USER=rstudio
-ENV PHANTOMJS_VERSION="2.1.1+dfsg-2"
 
-# Replace default debian package mirrors with bytemark package mirrors
-RUN sed -i 's%deb.debian.org%mirror.bytemark.co.uk%' /etc/apt/sources.list
+# Add bytemark apt mirrors
+RUN printf '\ndeb http://mirror.bytemark.co.uk/debian stretch main\ndeb-src http://mirror.bytemark.co.uk/debian stretch main' \
+    >> /etc/apt/sources.list
 
 # Set locale
 RUN apt-get update \
@@ -39,9 +39,7 @@ RUN apt-get update && apt-get install -y \
     $(cat /tmp/apt_packages) \
     # Dependencies of rgl which itself is a dependency
     mesa-common-dev \
-    libglu1-mesa-dev \
-    # Dependency of R package Webshot
-    phantomjs=$PHANTOMJS_VERSION; \
+    libglu1-mesa-dev; \
     rm -rf /var/lib/apt/lists/*; \
 
     # Install texlive with LaTex binaries and tools (scheme-basic)
@@ -87,7 +85,10 @@ RUN install2.r --error \
     && R -e "devtools::install_github('moj-analytical-services/s3browser')" \
 
     # Install webshot (dependency => PhantomJS) for Doc/PDF with JS graphs in it
-    && R -e "install.packages('webshot')"
+    && R -e "install.packages('webshot')" \
+    && R -e "webshot::install_phantomjs()" \
+    && mv /root/bin/phantomjs /usr/bin/phantomjs \
+    && chmod a+rx /usr/bin/phantomjs
 
 # Configure git
 RUN git config --system credential.helper 'cache --timeout=3600' \
