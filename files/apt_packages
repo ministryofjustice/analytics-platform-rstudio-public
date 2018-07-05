@@ -1,0 +1,15 @@
+alien
+build-essential
+curl
+libfontconfig1
+libgdal-dev
+libgeos-dev
+libglpk-dev
+libpoppler-cpp-dev
+libproj-dev
+libbz2-dev
+lmodern
+python-pip
+rrdtool
+texinfo
+wget
