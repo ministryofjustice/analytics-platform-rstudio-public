@@ -102,7 +102,13 @@ RUN install2.r --error \
     && mv /root/bin/phantomjs /usr/bin/phantomjs \
     && chmod a+rx /usr/bin/phantomjs
 
-
+# We want all packages to use the default MRAN mirror so that when we upgrade users, they don't magically get new packages
+# However, when they install their own packages, we want this to come from latest CRAN
+# RUN echo "\nr-cran-repos=http://cran.rstudio.com" >> /etc/rstudio/rsession.conf  This one has no effect
+RUN mv /usr/local/lib/R/etc/Rprofile.site /usr/local/lib/R/etc/Rprofile2.site
+RUN grep -v options\(repos /usr/local/lib/R/etc/Rprofile2.site > /usr/local/lib/R/etc/Rprofile.site
+RUN rm /usr/local/lib/R/etc/Rprofile2.site
+RUN echo "options(repos = c(CRAN='https://cran-proxy.services.alpha.mojanalytics.xyz'), download.file.method = 'libcurl')" >> /usr/local/lib/R/etc/Rprofile.site
 
 # Configure git
 RUN git config --system credential.helper 'cache --timeout=3600' \
