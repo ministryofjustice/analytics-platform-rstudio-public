@@ -23,6 +23,7 @@ ENV LC_ALL=en_GB.UTF-8 \
 # Configure R
 RUN echo '\n.libPaths("~/R/library")' >> /usr/local/lib/R/etc/Rprofile.site \
     && echo "PATH=\"${PATH}\"" >> /usr/local/lib/R/etc/Renviron \
+    && echo "AWS_DEFAULT_REGION=eu-west-1" >> /usr/local/lib/R/etc/Renviron \
     && echo "r-libs-user=~/R/library" >> /etc/rstudio/rsession.conf
 
 # Add static list of apt & R packages
