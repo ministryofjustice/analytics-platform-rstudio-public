@@ -1,13 +1,14 @@
 alien
 build-essential
 curl
+libbz2-dev
 libfontconfig1
 libgdal-dev
 libgeos-dev
 libglpk-dev
 libpoppler-cpp-dev
 libproj-dev
-libbz2-dev
+libudunits2-dev
 lmodern
 nano
 python-pip
