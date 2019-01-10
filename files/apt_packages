@@ -1,6 +1,7 @@
 alien
 build-essential
 curl
+cargo
 libbz2-dev
 libfontconfig1
 libgdal-dev
@@ -11,7 +12,9 @@ libproj-dev
 libudunits2-dev
 lmodern
 nano
-python-pip
+nodejs
+npm
+python3-pip
 rrdtool
 texinfo
 vim
