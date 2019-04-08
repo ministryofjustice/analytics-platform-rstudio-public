@@ -83,7 +83,7 @@ grep -q -F "PKG_CONFIG_PATH" "$R_HOME/etc/Renviron" \
 
 sudo -i -u "${USER}" /usr/lib/rstudio-server/bin/rserver \
   --server-daemonize=0 \
-  --rsession-ld-library-path="/opt/conda/lib:$RSTUDIO_ENV_PATH/lib" \
+  --rsession-ld-library-path="/usr/lib/rstudio-server:/opt/conda/lib:$RSTUDIO_ENV_PATH/lib" \
   --rsession-which-r="$RSTUDIO_ENV_PATH/bin/R"
 }
 function main() {
