@@ -5,6 +5,11 @@ GROUP=staff
 USER_UID=1001
 export HOME="/home/$USER"
 
+function cleanup() {
+ rm -rf "$HOME/.conda/envs/rstudio"
+}
+trap cleanup ERR
+
 function init_user() {
   if [ "$(id -u "$USER" 2>/dev/null)" != $USER_UID ]; then
       useradd -g $GROUP -u $USER_UID -d "/home/$USER" "$USER" || true
@@ -30,9 +35,15 @@ function init_conda() {
 
   # shellcheck disable=SC1091
   . /opt/conda/etc/profile.d/conda.sh
-
-    conda create --use-index-cache --clone root -n rstudio --copy \
+  conda_envs=$(conda env list)
+  if ! grep -q rstudio$ <<< "$conda_envs"; then
+    echo "no existing environment found"
+    conda create --use-index-cache --clone root -n rstudio --copy -y \
     && chown -R "${USER}:${GROUP}" "/home/$USER/.conda/"
+  else
+    echo "Conda Rstudio environment already exists"
+  fi
+
 }
 
 
