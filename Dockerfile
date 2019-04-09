@@ -72,8 +72,6 @@ RUN conda config --add channels bioconda \
     && rm -f /tmp/{apt_packages,conda_packages}
 
 RUN ln -s /bin/tar /bin/gtar \
-## Install etl_manager to allow analysts declare databases on athena via R (using reticulate)
-  && pip install git+git://github.com/moj-analytical-services/etl_manager.git@v1.0.4#egg=etl_manager \
 #    # Install phantomjs via webshot for Doc/PDF with JS graphs in it
     && R -e "library(webshot); webshot::install_phantomjs()" \
     && mv /root/bin/phantomjs /usr/bin/phantomjs \
