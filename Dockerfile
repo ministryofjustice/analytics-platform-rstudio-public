@@ -1,12 +1,10 @@
-FROM rocker/verse:3.5.3@sha256:7cf4253239c338fbef924ddf46b7632cc52d1da7616e3d80b11bca0093071cb2
+FROM rocker/verse:3.5.1@sha256:3ab705fd5ef8970f19ba7ca256f1cd158c6d7514cd39f33ab3b8cde3ada42bbd
 LABEL maintainer=analytics-platform-tech@digital.justice.gov.uk
 
 ARG GITHUB_PAT
 ARG NCPUS=1
 
-# R version 3.5.3 is not available via Conda, sticking to 3.5.1
-# ENV R_VERSION=${R_VERSION:-3.5.1}
-ENV R_VERSION=3.5.1
+ENV R_VERSION=${R_VERSION:-3.5.1}
 ENV PY_VERSION=${PY_VERSION:-3.7}
 
 ENV USER=rstudio
