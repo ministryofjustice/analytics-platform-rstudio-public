@@ -45,7 +45,7 @@ RUN apt-get -qq update \
     && alien -i /tmp/simbaathena-1.0.3.1004-1.x86_64.rpm \
     && rm -f /tmp/simbaathena-1.0.3.1004-1.x86_64.rpm
 
-RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-4.5.11-Linux-x86_64.sh -O ~/miniconda.sh && \
+RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh && \
   /bin/bash ~/miniconda.sh -b -p /opt/conda && \
   rm ~/miniconda.sh && \
   /opt/conda/bin/conda clean -tipsy && \
@@ -54,6 +54,7 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-4.5.11-Linux-x86
 #
 #
 # Configure R
+COPY files/.condarc /opt/conda/
 RUN conda install python=$PY_VERSION r-base=$R_VERSION
 RUN echo '.libPaths(c("~/R/library",paste0(R.home(), "/library"), .libPaths()))' >> /usr/local/lib/R/etc/Rprofile.site \
     && echo "PATH=\"${PATH}\"" >> /usr/local/lib/R/etc/Renviron \
@@ -67,8 +68,7 @@ RUN echo '.libPaths(c("~/R/library",paste0(R.home(), "/library"), .libPaths()))'
 #
 # Install Conda Packages
 COPY files/conda_packages /tmp/
-RUN conda config --add channels bioconda \
-    && conda config --add channels conda-forge \
+RUN conda config --system --set pip_interop_enabled True \
     && conda install \
     $(cat /tmp/conda_packages) \
     && rm -f /tmp/{apt_packages,conda_packages}
@@ -100,7 +100,6 @@ RUN echo "options(repos = c(CRAN='https://cran.rstudio.com'), download.file.meth
 COPY files/odbc* /etc/
 
 
-COPY files/.condarc /opt/conda/
 COPY start.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/start.sh
 
