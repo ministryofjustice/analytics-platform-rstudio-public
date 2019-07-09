@@ -24,6 +24,7 @@
 'r-rprojroot'
 'r-shiny'
 'r-stringr'
+'r-s3tools'
 'r-tidyverse'
 'r-webshot'
 'r-xml2'

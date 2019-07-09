@@ -1,8 +1,12 @@
 channels:
   - conda-forge
   - r
-  - bioconda
+  - moj-analytical-services
   - defaults
 
 envs_dirs:
   - ~/.conda/envs
+
+pinned_packages:
+  - openssl=1.1
+  - r-base=3.5.1

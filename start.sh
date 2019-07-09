@@ -78,6 +78,11 @@ export R_HOME=$CONDA_PREFIX/lib/R
   && touch "$R_HOME/etc/Renviron" \
   && chown "$USER" "$R_HOME/etc/Renviron"
 
+# rstudio 1.2 uses `bash -l` instead of `bash` so we need to
+# link the conda activate stuff into bash_profile
+if [ ! -f ~/.bash_profile ]; then
+  ln -s ~/.bashrc ~/.bash_profile
+fi
 
 grep -q -F "PATH" "$R_HOME/etc/Renviron" \
   && sed -i "s|PATH=.*|PATH=\"${PATH}\"|" "$R_HOME/etc/Renviron" \
