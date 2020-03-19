@@ -13,7 +13,7 @@ ENV USER=rstudio
 ENV LC_ALL=en_GB.UTF-8 \
     LANG=en_GB.UTF-8
 
-ENV PATH /opt/conda/bin:$PATH
+ENV PATH /opt/conda/bin:$HOME/.local/bin:$PATH
 
 ## Set locale & install packages
 RUN echo "en_GB.UTF-8 UTF-8" >> /etc/locale.gen \

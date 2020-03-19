@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [2.0.1] - 2020-03-19
 ### Changed
 - Added pip install nbstripout to filter '.ipynb' files on git commit
+- Modify ENV to add $HOME/.local/bin - path to nbstripout 
 
 ## [2.0.0] - 2018-04-24
 ### Changed
