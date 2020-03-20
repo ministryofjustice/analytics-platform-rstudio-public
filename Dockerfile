@@ -107,5 +107,3 @@ RUN chmod +x /usr/local/bin/start.sh
 EXPOSE 8787
 
 CMD ["/usr/local/bin/start.sh"]
-
-ENV PATH $HOME/.local/bin:$PATH

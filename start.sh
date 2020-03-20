@@ -102,6 +102,9 @@ sudo -i -u "${USER}" /usr/lib/rstudio-server/bin/rserver \
   --rsession-ld-library-path="/usr/lib/rstudio-server:/opt/conda/lib:$RSTUDIO_ENV_PATH/lib" \
   --rsession-which-r="$RSTUDIO_ENV_PATH/bin/R"
 }
+
+export PATH=$HOME/.local/bin:$PATH
+
 function main() {
   init_user
   init_conda
