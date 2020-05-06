@@ -40,6 +40,8 @@ function init_conda() {
     echo "no existing environment found"
     conda create --use-index-cache --clone root -n rstudio --copy -y \
     && chown -R "${USER}:${GROUP}" "/home/$USER/.conda/"
+    chmod -R 775 "/home/$USER/.conda/envs/rstudio/bin" \
+    && chmod -R 775 "/home/$USER/.conda/envs/rstudio/lib/R/bin"
   else
     echo "Conda Rstudio environment already exists"
   fi
