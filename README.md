@@ -55,3 +55,22 @@ apt-file search titling.sty
 ```
 
 See: <https://github.com/rstudio/rmarkdown/issues/359#issuecomment-253335365>
+
+## Design discussion
+
+* Rocker is the standard Docker image for R
+  * We choose "verse" variant (because we want TinyTeX?)
+* Install conda, because that is our recommended package manager
+* Install a few system packages needed by analysts, which really can't be installed by user with conda (minimize these as they bloat everyone)
+
+### Users
+
+The rocker image creates 'rstudio' user (uid 1000) for [normal user use](https://www.rocker-project.org/use/managing_users/#custom-usernames-and-user-ids). However AP's Dockerfile [introduces another user](https://github.com/ministryofjustice/analytics-platform-rstudio/commit/46527fd018e0f105e797fa7b92b962ff0e4cee27), named after the user's GitHub username (uid 1001). We're not entirely sure.
+
+There are a couple of consequences of using uid 1001:
+
+* **slow chown** - Rocker [creates the home directory with ownership by 'rstudio' (1000)](https://github.com/rocker-org/rocker-versioned/blob/master/rstudio/3.5.1.Dockerfile#L55-L60). So AP needs to 'chown' it to 1001, otherwise users don't have permissions to the home dir. Once the home dir is full of files, the chown takes a while, slowing startup of RStudio.
+
+* **affects other tools** - The [Jupyter image also has to use 1001 and do the chown](https://github.com/ministryofjustice/analytics-platform-jupyter-notebook/blob/95c830dd6ff726c7831a227a247fd6cc869d8dee/datascience-notebook/Dockerfile#L20-L22), because it shares the home directory.
+
+So maybe we could switch to just using the rstudio/1000 user?
