@@ -130,7 +130,9 @@ RUN echo "options(repos = c(CRAN=https://cran.rstudio.com), download.file.method
     && git config --system push.default simple \
     && update-alternatives --set editor /bin/nano
 
+EXPOSE 8787
+
+# Override the /init entrypoint and use our own start.sh script
 COPY start.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/start.sh
-EXPOSE 8787
 CMD ["/usr/local/bin/start.sh"]
