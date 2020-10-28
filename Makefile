@@ -1,23 +1,31 @@
 SHELL = '/bin/bash'
-export BUILD_TAG ?= local
-export DOCKER_BUILDKIT=1
-export PROJECT_NAME=rstudio
+export IMAGE_TAG ?= local
+export DOCKER_BUILDKIT?=1
+export REPOSITORY?=rstudio
+export REGISTRY?=mojanalytics
+export NETWORK?=default
+export CHEF_LICENSE=accept-no-persist
 
-.PHONY: build test
+.PHONY: build test pull push inspec up clean
 
 pull:
-	docker-compose pull test
+	docker pull ${REGISTRY}/${REPOSITORY}:${IMAGE_TAG}
+
 build:
-	docker build -t quay.io/mojanalytics/${PROJECT_NAME}:${BUILD_TAG} .
+	docker-compose build tests
+	docker build --network=${NETWORK} -t ${REGISTRY}/${REPOSITORY}:${IMAGE_TAG} .
 
-test:
-	echo Testing Container Version: ${BUILD_TAG}
-	docker-compose --project-name ${PROJECT_NAME} up -d test
-	docker-compose run --rm inspec exec tests -t docker://${PROJECT_NAME}_test_1
+push:
+	docker push ${REGISTRY}/${REPOSITORY}:${IMAGE_TAG}
 
-enter:
-	docker-compose --project-name ${PROJECT_NAME} run --rm test bash
+test: clean up
+	echo Testing Container Version: ${IMAGE_TAG}
+	docker-compose --project-name ${REPOSITORY} run --rm inspec exec tests -t docker://${REPOSITORY}_test_1
 
 clean:
 	docker-compose down
-	docker-compose --project-name ${PROJECT_NAME} down
+	docker-compose --project-name ${REPOSITORY} down
+	# docker volume rm rstudio_tests
+
+up:
+	docker-compose --project-name ${REPOSITORY} up -d tests test
