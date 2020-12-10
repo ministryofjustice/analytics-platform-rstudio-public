@@ -25,7 +25,7 @@ test: clean up
 clean:
 	docker-compose down
 	docker-compose --project-name ${REPOSITORY} down
-	# docker volume rm rstudio_tests
+	docker volume rm rstudio_tests
 
 up:
 	docker-compose --project-name ${REPOSITORY} up -d tests test

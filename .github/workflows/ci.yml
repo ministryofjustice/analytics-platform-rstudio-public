@@ -76,7 +76,9 @@ jobs:
           channel: current
           project: inspec
       - name: Test
-        run: make test
+        run: |
+          make clean
+          make test
         env:
           NETWORK: host
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
