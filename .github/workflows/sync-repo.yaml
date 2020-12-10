@@ -14,7 +14,8 @@ jobs:
       - name: Sync main branch to public fork
         uses: wei/git-sync@v2
         with:
-          source_repo: "${{ secrets.SOURCE_REPO }}"
+          source_repo: "${{ github.repository }}"
           source_branch: "main"
           destination_repo: "ministryofjustice/analytics-platform-rstudio-public"
           destination_branch: "main"
+          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
