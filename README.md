@@ -2,11 +2,9 @@
 
 RStudio Docker image for Analytics Platform. Used by [RStudio helm chart](https://github.com/ministryofjustice/analytics-platform-helm-charts/tree/master/charts/rstudio).
 
-[![Docker Repository on Quay](https://quay.io/repository/mojanalytics/rstudio/status "Docker Repository on Quay")](https://quay.io/repository/mojanalytics/rstudio)
-
 ## Builds
 
-The docker image is built and hosted on [Quay.io](https://quay.io/repository/mojanalytics/rstudio)
+The docker image is built using GitHub Actions and hosted on an internal ECR repository.
 
 ## Usage
 
@@ -16,52 +14,21 @@ update the tag
 ### Build
 
 ```bash
-docker image build --no-cache -t quay.io/mojanalytics/rstudio .
+make build
 ```
 
-#### Run locally
+### Run locally
 
 ```bash
-docker container run -d --rm -p 8787:8787 quay.io/mojanalytics/rstudio
+make up
 ```
-
-#### Tag/Push
-
-When satisfied Tag and push the image
-
-Tag
-
-```bash
-docker image tag quay.io/mojanalytics/rstudio quay.io/mojanalytics/rstudio:<x.x.x>
-```
-
-Push
-
-```bash
-docker image push quay.io/mojanalytics/rstudio:<x.x.x>
-```
-
-## Tricks
-
-### Find apt package with a certain file
-
-RStudio may complain about some missing file. There is a command to find
-the package containing the file:
-
-```bash
-apt-get install apt-file
-apt-file update
-apt-file search titling.sty
-```
-
-See: <https://github.com/rstudio/rmarkdown/issues/359#issuecomment-253335365>
 
 ## Design discussion
 
 * Rocker is the standard Docker image for R
-  * We choose "verse" variant (because we want TinyTeX?)
-* Install conda, because that is our recommended package manager
-* Install a few system packages needed by analysts, which really can't be installed by user with conda (minimize these as they bloat everyone)
+  * We choose "verse" variant (because we want TinyTeX)
+* Install Conda, because that is our recommended package manager
+* Install a few system packages needed by analysts, which really can't be installed by user with Conda (minimize these as they bloat everyone)
 
 ### Users
 
