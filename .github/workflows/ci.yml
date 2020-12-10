@@ -7,7 +7,7 @@ name: RStudio Build & Test
 
 jobs:
   yamllint:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Check out code
         uses: actions/checkout@main
@@ -15,15 +15,15 @@ jobs:
         uses: actionshub/yamllint@main
 
   mdl:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Check out code
         uses: actions/checkout@main
       - name: Run Markdown Lint
-        uses: actionshub/markdownlint@master
+        uses: actionshub/markdownlint@main
 
   docker:
-    if: github.repository == 'analytics-platform-rstudio'
+    if: ${{ github.repository }} == 'analytics-platform-rstudio'
     runs-on: [self-hosted, ecr]
     env:
       REPOSITORY: rstudio
