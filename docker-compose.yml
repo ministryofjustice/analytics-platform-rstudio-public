@@ -2,10 +2,10 @@
 version: "3.7"
 
 services:
-  tests:
+  test_files:
     build:
       context: .
-      dockerfile: Dockerfile.tests
+      dockerfile: Dockerfile.test_files
       network: ${NETWORK:-default}
     volumes:
       - tests:/tests
@@ -14,7 +14,10 @@ services:
     ports: [8787:8787]
     network_mode: ${NETWORK}
     volumes:
-      - tests:/share/tests
+      - tests:/share/tests:ro
+    environment:
+      AWS_DEFAULT_REGION: eu-west-1
+      AWS_REGION: eu-west-1
   inspec:
     image: chef/inspec:current
     network_mode: ${NETWORK}
