@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv sh
+#!/usr/bin/with-contenv bash
 
 # Set secure cookie key so that auth-proxy can pass in the correct cookie
 # See load-balancing docs for more inforamtion
