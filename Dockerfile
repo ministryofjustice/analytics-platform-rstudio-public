@@ -9,6 +9,8 @@ ENV LC_ALL="en_GB.UTF-8" \
   DISABLE_AUTH="true" \
   EDITOR="nano"
 
+ENV QUARTO_VERSION="1.3.361"
+
 RUN echo "en_GB.UTF-8 UTF-8" >> /etc/locale.gen \
   && locale-gen en_GB.utf8 \
   && update-locale LANG=en_GB.UTF-8 \
@@ -36,12 +38,18 @@ RUN echo "en_GB.UTF-8 UTF-8" >> /etc/locale.gen \
   libgit2-dev \
   ca-certificates-java \
   openjdk-8-jdk \
+  pandoc \
+  pandoc-citeproc \
+  gdebi-core \
   && rm -rf /var/lib/apt/lists/*
 
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 10 &&\
   update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 10 &&\
   command -v python &&\
   command -v pip
+
+RUN curl -LO https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/quarto-${QUARTO_VERSION}-linux-amd64.deb
+RUN gdebi --non-interactive quarto-${QUARTO_VERSION}-linux-amd64.deb
 
 RUN patch -u /etc/cont-init.d/02_userconf -i /userconf.patch
 RUN rm -f /etc/cont-init.d/02_userconf.orig
